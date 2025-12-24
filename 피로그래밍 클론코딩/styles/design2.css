@@ -1,0 +1,263 @@
+body {
+    background: #000;
+    color:#fff;
+    min-width:350px;
+}
+.header {
+    display:flex; flex-flow:row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin:0 auto;
+    max-width:1400px;
+    padding: 20px 40px;
+}
+.header img {width:40px;}
+.header .nav {
+    display: flex; flex-flow: row nowrap;
+}
+.header .nav a {
+    margin-left:25px; font-size:18px; color:#ccc;
+}
+.header .nav .active {
+    color:#2ecc71;
+}
+.header .nav a:hover {
+    transform:translateY(-2px);
+}
+.header .header-menu {display:none;}
+.generation {
+    position:relative;
+    max-width:1400px;
+    margin:30px auto 30px;
+    text-align: center;
+}
+.generation .gen-current {font-size:23px; font-weight:700;}
+.generation .gen-next {
+    position:absolute;
+    right:40px; top:50%;
+    font-size:20px;
+    transform: translateY(-50%);
+}
+.generation .gen-next span {}
+.generation .gen-next .arrow {margin-left:5px;}
+.interview-list {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+.interview-list .interview-card {
+    position: relative;
+    background: #3a3a3a;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.2s ease;
+}
+.interview-list .interview-card:hover {
+    transform: translateY(-2px);
+}
+.interview-list .interview-card .profile {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.interview-list .interview-card .profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+.interview-list .interview-card:hover .profile img {
+    transform: scale(1.05);
+}
+.interview-list .interview-card .info {}
+.interview-list .interview-card .info .name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.interview-list .interview-card .info .tag {
+    font-size: 13px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-bottom: 7px;
+    background: #4995dd;
+}
+.interview-list .interview-card .info .tag0 {
+    font-size: 13px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-bottom: 7px;
+    background: #d83b3b;
+}
+.interview-list .interview-card .info .comment {
+    font-size: 16px;
+    color: #ddd;
+    line-height: 1.4;
+}
+.interview-list .interview-card .menu {
+    position:absolute;
+    top:20px; right:20px;
+    width:20px; gap:4px;
+    display:flex; flex-flow:column nowrap;
+    margin-left:20px;
+    align-self:flex-start;
+}
+.interview-list .interview-card .menu span {
+    height:2px;
+    background:#7a7979;
+    transition:transform 0.2s ease;
+}
+.interview-list .interview-card:hover .menu span:nth-child(1) {
+    transform-origin: left;
+    transform:scaleX(0.4);
+}
+.interview-list .interview-card:hover .menu span:nth-child(2) {
+    transform:scaleX(1);
+}
+.interview-list .interview-card:hover .menu span:nth-child(3) {
+    transform-origin: right;
+    transform:scaleX(0.4);
+}
+.footer {
+    background: #3a3a3a;
+    padding: 60px 40px 30px;
+}
+.footer .footer-title {
+    max-width:1400px;
+    margin:0 auto 20px;
+    transition: transform 0.2s ease;
+}
+.footer .footer-title:hover {
+    transform:translateY(-2px);
+}
+.footer .footer-inner {
+    max-width:1400px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.footer .footer-inner .footer-icons {display:flex; gap:12px;}
+.footer .footer-inner .footer-icons .footer-icon {
+    width:36px; height:36px;
+    border-radius:50%;
+    background:#000;
+    display:flex; align-items:center;
+    justify-content:center;
+    transition: transform 0.2s ease;
+}
+.footer .footer-inner .footer-icons .footer-icon:hover {
+    transform:translateY(-2px);
+}
+.footer .footer-inner .footer-icons .footer-icon img {width:18px; height:18px;}
+.footer .footer-inner .footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.footer .footer-inner .footer-nav a {
+    color: #ffffff;
+    font-size: 15px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+.footer .footer-inner .footer-nav a:hover {
+    transform:translateY(-2px);
+}
+.footer .footer-inner .footer-nav span {
+    color: #ffffff;
+    font-size: 14px;
+}
+.footer .footer-email {
+    max-width:1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    transition: transform 0.2s ease;
+}
+.footer .footer-email:hover {
+    transform:translateY(-2px);
+}
+.footer .footer-email .email-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #000;
+    flex-shrink: 0;
+}
+.footer .footer-email .email-icon img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: block;
+}
+.footer .footer-email .email-address {
+    color: #ffffff;
+    font-size: 15px;
+    text-decoration: none;
+    line-height: 1;
+}
+.footer .footer-final {
+    max-width:1400px;
+    margin: 0 auto;
+    background: #2f2f2f;
+    color: #a19f9f;
+    text-align: center;
+    font-size: 13px;
+    padding: 18px 0;
+    margin-top: 30px;
+}
+
+@media (max-width:768px) {
+    .header .nav {display: none;}
+    .header .header-menu {
+        display: flex; flex-direction: column;
+        gap: 7px;
+    }
+    .header .header-menu span {
+        width: 30px; height: 3px;
+        background: #fff;
+    }
+    .header .header-menu span:nth-child(1) {
+        transform-origin: left;
+        transform:scaleX(0.4);
+    }
+    .header .header-menu span:nth-child(2) {
+        transform:scaleX(1);
+    }
+    .header .header-menu span:nth-child(3) {
+        transform-origin: left;
+        transform:scaleX(0.8);
+    }
+    .interview-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer .footer-inner .footer-nav {justify-content: center;}
+    .footer .footer-title {text-align: center;}
+    .footer .footer-inner {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .footer .footer-email {justify-content: center;}
+    .footer .footer-final {text-align: center;}
+}
+
+@media (max-width:600px) {
+    .interview-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
