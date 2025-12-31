@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>리뷰 작성</h1>
+
+<form action="{% url 'reviews:create' %}" method="post">
+    {% csrf_token %}
+
+    <input name="title" placeholder="제목"><br><br>
+    <input name="release_year" placeholder="개봉년도"><br><br>
+    <input name="genre" placeholder="장르"><br><br>
+    <input name="score" placeholder="별점"><br><br>
+    <input name="running_time" placeholder="러닝타임(분)"><br><br>
+    <textarea name="content" cols="30" rows="5"
+              placeholder="리뷰 내용을 작성하세요"></textarea><br><br>
+    <input name="director" placeholder="감독"><br><br>
+    <input name="actor" placeholder="배우"><br><br>
+    <input type="submit" value="Save">
+</form>
+
+{% endblock %}
