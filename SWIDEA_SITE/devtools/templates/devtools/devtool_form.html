@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>
+    {% if mode == 'create' %}
+        DevTool Register
+    {% else %}
+        DevTool Detail Update
+    {% endif %}
+</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>이름</label>
+    {{ form.name }}
+
+    <label>종류</label>
+    {{ form.kind }}
+
+    <label>개발툴 설명</label>
+    {{ form.content }}
+
+    <br><br>
+    <button type="submit">저장</button>
+</form>
+
+{% endblock %}

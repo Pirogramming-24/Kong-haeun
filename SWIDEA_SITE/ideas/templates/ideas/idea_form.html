@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>
+    {% if mode == 'create' %}
+        Idea Register
+    {% else %}
+        Idea Detail Update
+    {% endif %}
+</h2>
+
+<form method="post"
+      enctype="multipart/form-data"
+      action="{% if mode == 'create' %}
+                  {% url 'ideas:create' %}
+              {% else %}
+                  {% url 'ideas:update' form.instance.id %}
+              {% endif %}">
+    {% csrf_token %}
+
+    <label>아이디어명:</label>
+    {{ form.title }}
+
+    <label>images:</label>
+    {{ form.image }}
+
+    {% if form.instance.image %}
+        <img src="{{ form.instance.image.url }}" style="max-width:200px;">
+    {% endif %}
+
+    <label>아이디어 설명:</label>
+    {{ form.content }}
+
+    <label>아이디어 관심도:</label>
+    {{ form.interest }}
+
+    <label>예상 개발툴:</label>
+    {{ form.devtool }}
+
+    <br><br>
+    <button type="submit">저장</button>
+</form>
+{% endblock %}

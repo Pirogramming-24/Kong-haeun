@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Idea Detail{% endblock %}
+
+{% block content %}
+<h2>{{ idea.title }}</h2>
+
+<a href="{% url 'ideas:favorite' idea.id %}">
+    {% if is_favorite %}★{% else %}☆{% endif %}
+</a>
+
+<hr>
+
+{% if idea.image %}
+    <img src="{{ idea.image.url }}" style="max-width:300px;">
+{% endif %}
+
+<p>{{ idea.content|linebreaks }}</p>
+
+<p>관심도: {{ idea.interest }}</p>
+
+<h4>개발툴</h4>
+<ul>
+    {% if idea.devtool %}
+        <a href="{% url 'devtools:detail' idea.devtool.id %}">
+            {{ idea.devtool.name }}
+        </a>
+    {% else %}
+        <li>없음</li>
+    {% endif %}
+</ul>
+
+
+<form method="post" action="{% url 'ideas:delete' idea.id %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">삭제</button>
+</form>
+<a href="{% url 'ideas:list' %}">목록</a>
+<a href="{% url 'ideas:update' idea.id %}">수정</a>
+{% endblock %}
