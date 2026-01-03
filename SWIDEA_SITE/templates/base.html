@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Idea Project{% endblock %}</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+        }
+
+        /* NavBar */
+        .navbar {
+            background: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        /* Body */
+        .body {
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NavBar -->
+<div class="navbar">
+    <div>
+        <a href="{% url 'ideas:list' %}">My SW Idea Manage</a>
+    </div>
+    <div>
+        <a href="{% url 'ideas:create' %}">아이디어 등록</a>
+        <a href="{% url 'ideas:list' %}">아이디어 관리</a>
+        <a href="{% url 'devtools:create' %}">개발툴 등록</a>
+        <a href="{% url 'devtools:list' %}">개발툴 관리</a>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="body">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>
