@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>post_create</title>
+<style>
+    main {
+        height: 100vh;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <p>
+        <label>영양성분 이미지</label><br>
+        <input type="file" id="nutritionImage" accept="image/*">
+        <span id="ocr-status"></span>
+    </p>
+
+    <button class="btn btn-success">등록하기</button>
+</form>
+
+
+<script>
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+document
+  .getElementById("nutritionImage")
+  .addEventListener("change", runOCR);
+
+async function runOCR() {
+    const fileInput = document.getElementById("nutritionImage");
+    if (!fileInput.files.length) return;
+
+    const status = document.getElementById("ocr-status");
+    status.innerText = "분석 중...";
+    status.style.color = "gray";
+
+    const formData = new FormData();
+    formData.append("image", fileInput.files[0]);
+
+    try {
+        const response = await fetch("{% url 'posts:ocr_analyze' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+            },
+            body: formData,
+        });
+
+        if (!response.ok) throw new Error("서버 오류");
+
+        const data = await response.json();
+        if (!data.nutrition) throw new Error("OCR 결과 없음");
+
+        document.getElementById("id_calorie").value = data.nutrition.calorie ?? "";
+        document.getElementById("id_carb").value = data.nutrition.carb ?? "";
+        document.getElementById("id_protein").value = data.nutrition.protein ?? "";
+        document.getElementById("id_fat").value = data.nutrition.fat ?? "";
+
+        status.innerText = "분석 완료";
+        status.style.color = "green";
+
+    } catch (err) {
+        console.error(err);
+        status.innerText = "분석 실패";
+        status.style.color = "red";
+    }
+}
+</script>
+
+{% endblock %}
