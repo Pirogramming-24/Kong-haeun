@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .models import Review, Movie
+from reviews.services.rag import search_context
 
 # Create your views here.
 def reviews_list(request): # DB 여러 개
@@ -116,3 +117,6 @@ def movie_detail(request, pk):
     return render(request, "movie_detail.html", {
         "movie": movie,
     })
+
+def chatbot(request):
+    return render(request, "chatbot.html")

@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/delete/',views.review_delete,name='delete'),
     path('movies/',views.movie_list,name='movie_list'),
     path('movies/<int:pk>/',views.movie_detail,name='movie_detail'),
+    path('chat/',views.chatbot,name='chatbot'),
 ]
