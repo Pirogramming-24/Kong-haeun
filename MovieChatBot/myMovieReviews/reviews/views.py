@@ -119,4 +119,14 @@ def movie_detail(request, pk):
     })
 
 def chatbot(request):
-    return render(request, "chatbot.html")
+    answer = None
+
+    if request.method == "POST":
+        question = request.POST.get("question")
+        context = search_context(question)
+
+        answer = f"[검색된 컨텍스트]\n{context}"
+
+    return render(request, "chatbot.html", {
+        "answer": answer
+    })
