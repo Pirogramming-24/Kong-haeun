@@ -1,0 +1,23 @@
+<h1>{{ movie.title }}</h1>
+
+<img
+  src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+  style="width:300px;"
+/>
+
+<p><strong>개봉일:</strong> {{ detail.release_date }}</p>
+<p><strong>상영시간:</strong> {{ detail.runtime }}분</p>
+<p><strong>평점:</strong> {{ detail.vote_average }}</p>
+
+<p>{{ detail.overview }}</p>
+
+<h3>장르</h3>
+<ul>
+  {% for g in detail.genres %}
+    <li>{{ g.name }}</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'reviews:movie_list' %}">
+  <button>영화 목록</button>
+</a>

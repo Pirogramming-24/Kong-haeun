@@ -1,0 +1,19 @@
+<h1>TMDB 영화 목록</h1>
+
+<div style="display:flex; flex-wrap:wrap; gap:20px;">
+  {% for movie in movies %}
+    <div style="width:180px;">
+      {% if movie.poster_path %}
+        <img
+          src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+          style="width:100%;"
+        />
+      {% endif %}
+      <p>
+        <a href="{% url 'reviews:movie_detail' movie.id %}">
+            {{ movie.title }}
+        </a>
+    </p>
+    </div>
+  {% endfor %}
+</div>
