@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .models import Review, Movie
 from reviews.services.rag import search_context
+from reviews.services.llm import ask_llm
 
 # Create your views here.
 def reviews_list(request): # DB 여러 개
@@ -123,9 +124,12 @@ def chatbot(request):
 
     if request.method == "POST":
         question = request.POST.get("question")
+
+        # R: DB 검색
         context = search_context(question)
 
-        answer = f"[검색된 컨텍스트]\n{context}"
+        # A + G: LLM 호출
+        answer = ask_llm(question, context)
 
     return render(request, "chatbot.html", {
         "answer": answer
