@@ -1,19 +1,44 @@
 <h1>TMDB 영화 목록</h1>
 
+{% if not query %}
+  <p style="color:gray; margin-bottom:10px;">
+    전체 영화 목록을 표시합니다.
+  </p>
+{% else %}
+  <p style="color:gray; margin-bottom:10px;">
+    "{{ query }}" 검색 결과입니다.
+  </p>
+{% endif %}
+
+<form method="get" style="margin-bottom:20px;">
+  <input
+    type="text"
+    name="q"
+    placeholder="영화 제목 / 감독 / 배우 검색"
+    value="{{ query }}"
+  />
+  <button type="submit">검색</button>
+
+  <button type="submit" name="sort" value="title">제목순</button>
+  <button type="submit" name="sort" value="latest">최신 개봉순</button>
+</form>
+
+
+<!-- 영화 카드 목록 -->
 <div style="display:flex; flex-wrap:wrap; gap:20px;">
   {% for movie in movies %}
     <div style="width:180px;">
-      {% if movie.poster_path %}
-        <img
-          src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
-          style="width:100%;"
-        />
-      {% endif %}
-      <p>
-        <a href="{% url 'reviews:movie_detail' movie.id %}">
-            {{ movie.title }}
-        </a>
-    </p>
+      <a href="{% url 'reviews:movie_detail' movie.id %}">
+        {% if movie.poster_path %}
+          <img
+            src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+            style="width:100%;"
+          />
+        {% endif %}
+        <p>{{ movie.title }}</p>
+      </a>
     </div>
+  {% empty %}
+    <p>검색 결과가 없습니다.</p>
   {% endfor %}
 </div>

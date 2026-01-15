@@ -20,6 +20,8 @@ class Movie(models.Model):
     overview = models.TextField(blank=True) # 줄거리
     poster_path = models.CharField(max_length=255, blank=True) # 포스터 경로
     release_year = models.PositiveIntegerField(null=True, blank=True) # 개봉년도
-
+    director = models.CharField(max_length=200, blank=True) # 감독
+    actors = models.TextField(blank=True) # 배우
+ 
     def __str__(self):
         return self.title

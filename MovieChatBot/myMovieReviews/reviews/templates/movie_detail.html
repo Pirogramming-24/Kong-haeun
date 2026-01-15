@@ -1,23 +1,33 @@
+<a href="{% url 'reviews:movie_list' %}">영화 목록으로</a>
+
 <h1>{{ movie.title }}</h1>
 
-<img
-  src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
-  style="width:300px;"
-/>
+{% if movie.poster_path %}
+  <img
+    src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+    style="width:300px;"
+  />
+{% endif %}
 
-<p><strong>개봉일:</strong> {{ detail.release_date }}</p>
-<p><strong>상영시간:</strong> {{ detail.runtime }}분</p>
-<p><strong>평점:</strong> {{ detail.vote_average }}</p>
+<p><strong>개봉 연도:</strong> {{ movie.release_year }}</p>
 
-<p>{{ detail.overview }}</p>
+<p>
+  <strong>감독:</strong>
+  {% if movie.director %}
+    {{ movie.director }}
+  {% else %}
+    정보 없음
+  {% endif %}
+</p>
 
-<h3>장르</h3>
-<ul>
-  {% for g in detail.genres %}
-    <li>{{ g.name }}</li>
-  {% endfor %}
-</ul>
+<p>
+  <strong>출연 배우:</strong>
+  {% if movie.actors %}
+    {{ movie.actors }}
+  {% else %}
+    정보 없음
+  {% endif %}
+</p>
 
-<a href="{% url 'reviews:movie_list' %}">
-  <button>영화 목록</button>
-</a>
+<p><strong>줄거리:</strong></p>
+<p>{{ movie.overview }}</p>

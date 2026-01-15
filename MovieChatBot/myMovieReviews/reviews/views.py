@@ -1,7 +1,6 @@
-from django.shortcuts import render,redirect
-from .models import Review
-from .models import Movie
-from reviews.services.tmdb import get_movie_detail
+from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
+from .models import Review, Movie
 
 # Create your views here.
 def reviews_list(request): # DB 여러 개
@@ -82,16 +81,38 @@ def review_delete(request,pk):
 
 # Movie용 view
 def movie_list(request):
-    movies = Movie.objects.all()[:40]
-    context = {"movies":movies}
-    return render(request, "movie_list.html",context)
+    query = request.GET.get("q","") # 검색어
+    sort = request.GET.get("sort","") # 정렬
+    
+    movies = Movie.objects.all()
 
-def movie_detail(request,pk):
-    movie = Movie.objects.get(id=pk)
-    detail = get_movie_detail(movie.tmdb_id)
+    # 검색
+    if query:
+        movies = Movie.objects.filter(
+            Q(title__icontains=query) | # 대소문자 무시, 부분일치 검색
+            Q(director__icontains=query) |
+            Q(actors__icontains=query)
+        )
+    
+    # 정렬
+    if sort == "title":
+        movies = movies.order_by("title")
+    elif sort == "latest":
+        movies = movies.order_by("-release_year")
+
+    # 40개 제한
+    movies = movies[:40]
 
     context = {
-        "movie":movie,
-        "detail":detail,
+        "movies":movies,
+        "query":query,
+        "sort":sort,
     }
-    return render(request,"movie_detail.html",context)
+    return render(request, "movie_list.html",context)
+
+def movie_detail(request, pk):
+    movie = get_object_or_404(Movie, id=pk)
+
+    return render(request, "movie_detail.html", {
+        "movie": movie,
+    })
