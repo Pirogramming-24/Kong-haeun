@@ -121,7 +121,8 @@ def movie_detail(request, pk):
 
 def chatbot(request):
     answer = None
-
+    question = None
+    
     if request.method == "POST":
         question = request.POST.get("question")
 
@@ -132,5 +133,6 @@ def chatbot(request):
         answer = ask_llm(question, context)
 
     return render(request, "chatbot.html", {
-        "answer": answer
+        "question": question,
+        "answer": answer,
     })
