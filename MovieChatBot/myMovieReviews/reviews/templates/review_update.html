@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content%}
+
+<h1> 리뷰 수정하기 </h1>
+
+<form action="{% url 'reviews:update' review.id %}" method="post">
+    {% csrf_token %}
+    <input name="title" placeholder="제목" value="{{ review.title }}"><br><br>
+    <input name="release_year" placeholder="개봉년도" value="{{ review.release_year }}"><br><br>
+    <input name="genre" placeholder="장르" value="{{ review.genre }}"><br><br>
+    <input name="score" placeholder="별점" value="{{ review.score }}"><br><br>
+    <input name="running_time" placeholder="러닝타임(분)" value="{{ review.running_time }}"><br><br>
+    <textarea name="content" cols="30" rows="5"
+              placeholder="리뷰 내용">{{ review.content }}</textarea><br><br>
+    <input name="director" placeholder="감독" value="{{ review.director }}"><br><br>
+    <input name="actor" placeholder="배우" value="{{ review.actor }}"><br><br>
+    <input type="submit" value="Save">
+</form>
+
+{% endblock %}
