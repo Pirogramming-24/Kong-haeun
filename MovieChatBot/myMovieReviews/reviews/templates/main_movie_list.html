@@ -42,49 +42,78 @@
 <hr>
 
 <!-- 영화 카드 목록 -->
-<div style="display:flex; flex-wrap:wrap; gap:20px;">
+<hr>
 
+<div class="row g-4">
   {% for movie in movies %}
-    <div style="width:180px; text-align:center;">
-      <a href="{% url 'reviews:movie_detail' movie.id %}">
-        
-        {% if movie.poster_image %}
-          <img src="{{ movie.poster_image.url }}" style="width:100%;">
-        {% elif movie.poster_path %}
-          <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="width:100%;">
-        {% else %}
-          <div style="width:100%; height:260px; background:#eee; line-height:260px;">
-            No Image
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card h-100">
+
+        <a href="{% url 'reviews:movie_detail' movie.id %}" class="text-decoration-none text-dark">
+
+          {% if movie.poster_image %}
+            <img src="{{ movie.poster_image.url }}" class="card-img-top" alt="{{ movie.title }}">
+          {% elif movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="card-img-top" alt="{{ movie.title }}">
+          {% else %}
+            <div class="d-flex align-items-center justify-content-center bg-light" style="height:300px;">
+              No Image
+            </div>
+          {% endif %}
+
+          <div class="card-body text-center">
+            <h6 class="card-title mb-1">{{ movie.title }}</h6>
+            <small class="text-muted">
+              {% if movie.is_from_tmdb %}TMDB{% else %}직접 추가{% endif %}
+            </small>
           </div>
-        {% endif %}
 
-        <p><strong>{{ movie.title }}</strong></p>
-      </a>
-
-      {% if movie.is_from_tmdb %}
-        <small>TMDB</small>
-      {% else %}
-        <small>직접 추가</small>
-      {% endif %}
+        </a>
+      </div>
     </div>
   {% empty %}
     <p>조건에 맞는 영화가 없습니다.</p>
   {% endfor %}
-
 </div>
 
-<div style="margin-top:20px;">
-  {% if movies.has_previous %}
-    <a href="?page={{ movies.previous_page_number }}">이전</a>
-  {% endif %}
+<!-- 페이지네이션 -->
+<nav class="mt-4 d-flex justify-content-center">
+  <ul class="pagination pagination-sm flex-wrap">
 
-  <span>
-    {{ movies.number }} / {{ movies.paginator.num_pages }}
-  </span>
+    <!-- 이전 -->
+    {% if movies.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.previous_page_number }}">
+          이전
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">이전</span>
+      </li>
+    {% endif %}
 
-  {% if movies.has_next %}
-    <a href="?page={{ movies.next_page_number }}">다음</a>
-  {% endif %}
-</div>
+    <!-- 현재 페이지 / 전체 페이지 -->
+    <li class="page-item active">
+      <span class="page-link">
+        {{ movies.number }} / {{ movies.paginator.num_pages }}
+      </span>
+    </li>
+
+    <!-- 다음 -->
+    {% if movies.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.next_page_number }}">
+          다음
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">다음</span>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>
 
 {% endblock %}

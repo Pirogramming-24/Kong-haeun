@@ -4,9 +4,9 @@
 <h1>{{ movie.title }}</h1>
 
 {% if movie.poster_image %}
-  <img src="{{ movie.poster_image.url }}" style="width:300px;">
+  <img src="{{ movie.poster_image.url }}" class="img-fluid mb-3" style="max-width:300px;">
 {% elif movie.poster_path %}
-  <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="width:300px;">
+  <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="img-fluid mb-3" style="max-width:300px;">
 {% endif %}
 
 <ul>

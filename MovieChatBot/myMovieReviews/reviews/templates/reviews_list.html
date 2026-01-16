@@ -1,36 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>전체 리뷰</h1>
+<h1 class="mb-4">전체 리뷰</h1>
 
-<div style="margin-bottom:10px;">
-  <a href="?sort=latest">최신순</a> |
-  <a href="?sort=score">평점순</a> |
-  <a href="?sort=title">영화 제목순</a>
+<!-- 정렬 -->
+<div class="mb-3">
+  <a class="btn btn-sm btn-outline-secondary" href="?sort=latest">최신순</a>
+  <a class="btn btn-sm btn-outline-secondary" href="?sort=score">평점순</a>
+  <a class="btn btn-sm btn-outline-secondary" href="?sort=title">영화 제목순</a>
 </div>
 
 <hr>
 
-{% for review in reviews %}
-  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
-    <h4>
-      <a href="{% url 'reviews:movie_detail' review.movie.id %}">
-        {{ review.movie.title }}
-      </a>
-    </h4>
+<div class="row g-4">
+  {% for review in reviews %}
+    <!-- 반응형 컬럼 -->
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="card h-100 shadow-sm">
 
-    <p>{{ review.score }}</p>
-    <p>{{ review.content }}</p>
+        <!-- 포스터 -->
+        {% if review.movie.poster_image %}
+          <img src="{{ review.movie.poster_image.url }}" class="card-img-top">
+        {% elif review.movie.poster_path %}
+          <img src="https://image.tmdb.org/t/p/w500{{ review.movie.poster_path }}" class="card-img-top">
+        {% endif %}
 
-    <a href="{% url 'reviews:update' review.id %}">수정</a>
-    |
-    <form action="{% url 'reviews:delete' review.id %}" method="post" style="display:inline;">
-      {% csrf_token %}
-      <button type="submit">삭제</button>
-    </form>
-  </div>
-{% empty %}
-  <p>아직 작성된 리뷰가 없습니다.</p>
-{% endfor %}
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="{% url 'reviews:movie_detail' review.movie.id %}">
+              {{ review.movie.title }}
+            </a>
+          </h5>
+
+          <p class="card-text">
+            {{ review.score }}<br>
+            {{ review.content|truncatechars:80 }}
+          </p>
+        </div>
+
+        <div class="card-footer bg-white text-center">
+          <a class="btn btn-sm btn-outline-primary"
+             href="{% url 'reviews:update' review.id %}">
+            수정
+          </a>
+
+          <form action="{% url 'reviews:delete' review.id %}"
+                method="post"
+                style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-danger">
+              삭제
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  {% empty %}
+    <p>아직 작성된 리뷰가 없습니다.</p>
+  {% endfor %}
+</div>
 
 {% endblock %}
