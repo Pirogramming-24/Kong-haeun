@@ -144,19 +144,32 @@ def reviews_list(request):
 
 # 챗봇
 def chatbot(request):
-    answer = None
-    question = None
+    # 초기화
+    if request.GET.get("reset"):
+        request.session.pop("chat_history", None)
+        return redirect("reviews:chatbot")
+        
+    history = request.session.get("chat_history", [])
 
     if request.method == "POST":
         question = request.POST.get("question")
 
-        # R: DB 검색
-        context = search_context(question)
+        if question:
+            # R: DB 검색
+            context = search_context(question)
 
-        # A + G: LLM 호출
-        answer = ask_llm(question, context)
+            # A + G: LLM 호출
+            answer = ask_llm(question, context)
+
+            # 대화 기록에 추가
+            history.append({
+                "question": question,
+                "answer": answer,
+            })
+
+            # 세션에 다시 저장
+            request.session["chat_history"] = history
 
     return render(request, "chatbot.html", {
-        "question": question,
-        "answer": answer,
+        "history": history,
     })
