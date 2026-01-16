@@ -17,9 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('review/',include("reviews.urls"),),
-    path('', lambda request: redirect('reviews:list')), # / -> /review/로 보내기
+    path('review/', include("reviews.urls")),
+    path('', lambda request: redirect('reviews:main')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

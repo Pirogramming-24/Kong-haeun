@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <h1>영화 추천 챗봇</h1>
 
 <form method="post">
@@ -11,3 +14,5 @@
   <p><strong>영화 추천 봇:</strong></p>
   <p>{{ answer }}</p>
 {% endif %}
+
+{% endblock %}

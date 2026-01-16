@@ -1,29 +1,24 @@
 from django.db.models import Q
-from reviews.models import Movie, Review
+from reviews.models import Review
 
-def search_context(question, limit=5):
-    movies = Movie.objects.filter(
-        Q(title__icontains=question) |
-        Q(overview__icontains=question) |
-        Q(director__icontains=question) |
-        Q(actors__icontains=question)
-    )[:limit]
+def search_context(query):
+    reviews = Review.objects.select_related("movie").filter(
+        Q(content__icontains=query) |
+        Q(movie__title__icontains=query) |
+        Q(movie__director__icontains=query) |
+        Q(movie__actors__icontains=query)
+    )
 
-    reviews = Review.objects.filter(
-        Q(title__icontains=question) |
-        Q(content__icontains=question)
-    )[:limit]
-
-    context = []
-
-    for m in movies:
-        context.append(
-            f"영화 제목: {m.title}\n줄거리: {m.overview}"
-        )
-
+    texts = []
     for r in reviews:
-        context.append(
-            f"리뷰 제목: {r.title}\n리뷰 내용: {r.content}"
+        texts.append(
+            f"""
+            영화 제목: {r.movie.title}
+            감독: {r.movie.director}
+            배우: {r.movie.actors}
+            리뷰 내용: {r.content}
+            평점: {r.score}
+            """
         )
 
-    return "\n\n".join(context)
+    return "\n".join(texts)

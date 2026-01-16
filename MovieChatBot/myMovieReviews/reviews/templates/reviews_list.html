@@ -1,30 +1,36 @@
 {% extends "base.html" %}
-
 {% block content %}
 
-<h1>My Movie Reviews</h1>
+<h1>전체 리뷰</h1>
 
-{# {% url '앱이름:경로이름' 인자 %} #}
-<a href="{% url 'reviews:create' %}" class="btn btn-success mb-3">리뷰 작성</a>
-
-<ul class="reviews-list">
-    {% for review in reviews %}
-        <li class="review-item">
-            <a href="{% url 'reviews:detail' review.id %}">
-            <strong>{{ review.title }}</strong></a><br>
-            개봉년도: {{ review.release_year }}<br>
-            장르: {{ review.genre }}<br>
-            별점: {{ review.score }}<br>
-        </li>
-    {% empty %}
-        <li class="review-item">작성된 리뷰가 없습니다.</li>
-    {% endfor %}
-</ul>
-
-<div class="mb-3">
-    <a href="?sort=title" class="btn btn-outline-secondary btn-sm">제목순 (A->Z) </a>
-    <a href="?sort=score" class="btn btn-outline-secondary btn-sm">별점순 (높은 순)</a>
-    <a href="?sort=running_time" class="btn btn-outline-secondary btn-sm">상영시간순 (짧은 순)</a>
+<div style="margin-bottom:10px;">
+  <a href="?sort=latest">최신순</a> |
+  <a href="?sort=score">평점순</a> |
+  <a href="?sort=title">영화 제목순</a>
 </div>
+
+<hr>
+
+{% for review in reviews %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <h4>
+      <a href="{% url 'reviews:movie_detail' review.movie.id %}">
+        {{ review.movie.title }}
+      </a>
+    </h4>
+
+    <p>{{ review.score }}</p>
+    <p>{{ review.content }}</p>
+
+    <a href="{% url 'reviews:update' review.id %}">수정</a>
+    |
+    <form action="{% url 'reviews:delete' review.id %}" method="post" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit">삭제</button>
+    </form>
+  </div>
+{% empty %}
+  <p>아직 작성된 리뷰가 없습니다.</p>
+{% endfor %}
 
 {% endblock %}

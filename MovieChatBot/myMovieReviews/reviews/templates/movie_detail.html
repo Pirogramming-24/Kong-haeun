@@ -1,33 +1,67 @@
-<a href="{% url 'reviews:movie_list' %}">영화 목록으로</a>
+{% extends "base.html" %}
+{% block content %}
 
 <h1>{{ movie.title }}</h1>
 
-{% if movie.poster_path %}
-  <img
-    src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
-    style="width:300px;"
-  />
+{% if movie.poster_image %}
+  <img src="{{ movie.poster_image.url }}" style="width:300px;">
+{% elif movie.poster_path %}
+  <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" style="width:300px;">
 {% endif %}
 
-<p><strong>개봉 연도:</strong> {{ movie.release_year }}</p>
+<ul>
+  <li><strong>개봉년도:</strong> {{ movie.release_year|default:"정보 없음" }}</li>
+  <li><strong>감독:</strong> {{ movie.director|default:"정보 없음" }}</li>
+  <li><strong>배우:</strong> {{ movie.actors|default:"정보 없음" }}</li>
+  <li><strong>장르:</strong> {{ movie.genre|default:"정보 없음" }}</li>
+  <li><strong>러닝타임:</strong>
+    {% if movie.running_time %}
+      {{ movie.running_time }}분
+    {% else %}
+      정보 없음
+    {% endif %}
+  </li>
+</ul>
 
-<p>
-  <strong>감독:</strong>
-  {% if movie.director %}
-    {{ movie.director }}
-  {% else %}
-    정보 없음
-  {% endif %}
-</p>
+<hr>
 
-<p>
-  <strong>출연 배우:</strong>
-  {% if movie.actors %}
-    {{ movie.actors }}
-  {% else %}
-    정보 없음
-  {% endif %}
-</p>
+<h2>리뷰 목록</h2>
 
-<p><strong>줄거리:</strong></p>
-<p>{{ movie.overview }}</p>
+{% for review in reviews %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p><strong>평점:</strong> {{ review.score }}</p>
+    <p>{{ review.content }}</p>
+    <a href="{% url 'reviews:update' review.id %}">
+          <button>리뷰 수정</button>
+    </a>
+    <form action="{% url 'reviews:delete' review.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit">리뷰 삭제</button>
+    </form>
+  </div>
+{% empty %}
+  <p>아직 리뷰가 없습니다.</p>
+  <hr>
+  <h3>리뷰 작성</h3>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <label>평점</label><br>
+    <select name="score" required>
+      <option value="5">5점</option>
+      <option value="4">4점</option>
+      <option value="3">3점</option>
+      <option value="2">2점</option>
+      <option value="1">1점</option>
+    </select><br><br>
+
+    <label>리뷰 내용</label><br>
+    <textarea name="content" rows="4" required></textarea><br><br>
+
+    <button type="submit">리뷰 등록</button>
+  </form>
+
+{% endfor %}
+
+{% endblock %}

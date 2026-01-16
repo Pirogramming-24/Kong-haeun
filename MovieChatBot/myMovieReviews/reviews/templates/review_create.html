@@ -1,21 +1,57 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>리뷰 작성</h1>
+<h1>새 리뷰 작성</h1>
 
-<form action="{% url 'reviews:create' %}" method="post">
-    {% csrf_token %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
 
-    <input name="title" placeholder="제목"><br><br>
-    <input name="release_year" placeholder="개봉년도"><br><br>
-    <input name="genre" placeholder="장르"><br><br>
-    <input name="score" placeholder="별점"><br><br>
-    <input name="running_time" placeholder="러닝타임(분)"><br><br>
-    <textarea name="content" cols="30" rows="5"
-              placeholder="리뷰 내용을 작성하세요"></textarea><br><br>
-    <input name="director" placeholder="감독"><br><br>
-    <input name="actor" placeholder="배우"><br><br>
-    <input type="submit" value="Save">
+  <fieldset>
+    <legend>영화 정보</legend>
+
+    <label>제목</label><br>
+    <input type="text" name="title" required><br><br>
+
+    <label>개봉년도</label><br>
+    <input type="number" name="release_year"><br><br>
+
+    <label>감독</label><br>
+    <input type="text" name="director"><br><br>
+
+    <label>배우</label><br>
+    <input type="text" name="actor"><br><br>
+
+    <label>장르</label><br>
+    <input type="text" name="genre"><br><br>
+
+    <label>러닝타임(분)</label><br>
+    <input type="number" name="running_time"><br><br>
+
+    <label>포스터 이미지</label><br>
+    <input type="file" name="poster_image"><br>
+  </fieldset>
+
+  <br>
+
+  <fieldset>
+    <legend>리뷰</legend>
+
+    <label>평점</label><br>
+    <select name="score" required>
+      <option value="5">5점</option>
+      <option value="4">4점</option>
+      <option value="3">3점</option>
+      <option value="2">2점</option>
+      <option value="1">1점</option>
+    </select><br><br>
+
+    <label>리뷰 내용</label><br>
+    <textarea name="content" rows="6" required></textarea>
+  </fieldset>
+
+  <br>
+  <button type="submit">저장</button>
+  <a href="{% url 'reviews:main' %}">취소</a>
 </form>
 
 {% endblock %}
