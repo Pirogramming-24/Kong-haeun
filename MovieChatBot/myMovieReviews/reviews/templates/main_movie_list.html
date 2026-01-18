@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>나의 영화 컬렉션</h1>
+
+<p>
+  전체 {{ total_count }}편 |
+  TMDB {{ tmdb_count }}편 |
+  직접 추가 {{ custom_count }}편
+</p>
+
+<!-- 검색 + 필터 + 정렬 -->
+<form method="get" style="margin-bottom:20px;">
+
+  <!-- 검색 -->
+  <input
+    type="text"
+    name="q"
+    placeholder="영화 제목 / 감독 / 배우 검색"
+    value="{{ query }}"
+  />
+  <button type="submit">검색</button>
+
+  <!-- 필터 -->
+  <div style="margin-top:10px;">
+    <strong>필터:</strong>
+    <button type="submit" name="filter" value="all">전체</button>
+    <button type="submit" name="filter" value="tmdb">TMDB</button>
+    <button type="submit" name="filter" value="custom">직접추가</button>
+  </div>
+
+  <!-- 정렬 -->
+  <div style="margin-top:10px;">
+    <strong>정렬:</strong>
+    <button type="submit" name="sort" value="latest">최신순</button>
+    <button type="submit" name="sort" value="title">제목순</button>
+    <button type="submit" name="sort" value="year">개봉년도</button>
+  </div>
+
+</form>
+
+<hr>
+
+<!-- 영화 카드 목록 -->
+<hr>
+
+<div class="row g-4">
+  {% for movie in movies %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card h-100">
+
+        <a href="{% url 'reviews:movie_detail' movie.id %}" class="text-decoration-none text-dark">
+
+          {% if movie.poster_image %}
+            <img src="{{ movie.poster_image.url }}" class="card-img-top" alt="{{ movie.title }}">
+          {% elif movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="card-img-top" alt="{{ movie.title }}">
+          {% else %}
+            <div class="d-flex align-items-center justify-content-center bg-light" style="height:300px;">
+              No Image
+            </div>
+          {% endif %}
+
+          <div class="card-body text-center">
+            <h6 class="card-title mb-1">{{ movie.title }}</h6>
+            <small class="text-muted">
+              {% if movie.is_from_tmdb %}TMDB{% else %}직접 추가{% endif %}
+            </small>
+          </div>
+
+        </a>
+      </div>
+    </div>
+  {% empty %}
+    <p>조건에 맞는 영화가 없습니다.</p>
+  {% endfor %}
+</div>
+
+<!-- 페이지네이션 -->
+<nav class="mt-4 d-flex justify-content-center">
+  <ul class="pagination pagination-sm flex-wrap">
+
+    <!-- 이전 -->
+    {% if movies.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.previous_page_number }}">
+          이전
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">이전</span>
+      </li>
+    {% endif %}
+
+    <!-- 현재 페이지 / 전체 페이지 -->
+    <li class="page-item active">
+      <span class="page-link">
+        {{ movies.number }} / {{ movies.paginator.num_pages }}
+      </span>
+    </li>
+
+    <!-- 다음 -->
+    {% if movies.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ movies.next_page_number }}">
+          다음
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link">다음</span>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>영화 추천 챗봇</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="question" placeholder="영화에 대해 무엇이든 물어보세요">
+  <button type="submit">전송</button>
+</form>
+
+<div class="mb-3">
+  <a href="?reset=1" class="btn btn-outline-danger btn-sm">
+    대화 초기화
+  </a>
+</div>
+
+{% for chat in history %}
+  <div class="mb-3">
+    <div class="alert alert-secondary">
+      <strong>사용자:</strong> {{ chat.question }}
+    </div>
+    <div class="alert alert-info">
+      <strong>영화 추천봇:</strong> {{ chat.answer }}
+    </div>
+  </div>
+{% empty %}
+  <p class="text-muted">아직 대화가 없습니다.</p>
+{% endfor %}
+
+
+{% endblock %}
