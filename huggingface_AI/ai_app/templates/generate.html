@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>텍스트 생성</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <textarea name="text" rows="8" cols="70"
+        placeholder="시작 문장을 입력하세요"></textarea>
+        <br>
+    <button type="submit">텍스트 생성</button>
+</form>
+
+{% if result %}
+<hr>
+<h3>생성 결과</h3>
+<div class="result-box">
+    {{ result }}
+</div>
+{% endif %}
+
+{% endblock %}

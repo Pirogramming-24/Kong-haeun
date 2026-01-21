@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>감정 분석</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <textarea name="text" rows="8" cols="70"
+        placeholder="감정을 분석할 문장을 입력하세요"></textarea>
+        <br>
+    <button type="submit">감정 분석 실행</button>
+</form>
+
+{% if result %}
+<hr>
+<h3>분석 결과</h3>
+<div class="result-box">
+    {{ result }}
+</div>
+{% endif %}
+
+{% endblock %}
