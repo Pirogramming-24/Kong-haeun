@@ -20,7 +20,7 @@
 -->
 
 <!--
-### 3. google/gemma-*
+### 3. distilgpt2
 -**태스크**: Text Generation (텍스트 생성)
 -**입력 예시**
 -**출력 예시**
