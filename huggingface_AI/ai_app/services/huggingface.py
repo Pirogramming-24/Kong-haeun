@@ -29,7 +29,7 @@ def summarize_text(user_input: str) -> str:
 
 # 2. 감정 분석 모델
 _sentiment = pipeline(
-    "sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english"
+    "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment"
 )
 
 def analyze_sentiment(user_input: str) -> str:
@@ -48,7 +48,7 @@ def analyze_sentiment(user_input: str) -> str:
 
 # 3. 텍스트 생성 모델
 _generator = pipeline(
-    "text-generation", model="distilgpt2"
+    "text-generation", model="EleutherAI/gpt-neo-125M"
 )
 
 def generate_text(user_input: str) -> str:

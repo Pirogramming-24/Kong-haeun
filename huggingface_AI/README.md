@@ -14,17 +14,23 @@ raising both opportunities and ethical challenges.
 - **출력 예시**: Artificial intelligence (AI) has become one of the most transformative technologies of the modern era. In healthcare, it assists doctors in diagnosing diseases more accurately and efficiently. In finance, it is used for fraud detection and algorithmic trading.
 - 실행 화면 예시: ![alt text](image-2.png)
 
-### 2. distilbert-base-uncased-finetuned-sst-2-english
+### 2. cardiffnlp/twitter-roberta-base-sentiment
 - **태스크**: Sentiment Analysis (감정 분석)
 - **입력 예시** I really enjoyed using this AI service.
-- **출력 예시** POSITIVE (confidence: 1.00)
-- 실행 화면 예시: ![alt text](image-1.png)
+- **출력 예시** LABEL_2 (confidence: 0.99)
+- **라벨 설명**
+  - LABEL_0 → negative
+  - LABEL_1 → neutral
+  - LABEL_2 → positive
+- 실행 화면 예시: ![alt text](image-3.png)
 
-### 3. distilgpt2
+### 3. EleutherAI/gpt-neo-125M
 - **태스크**: Text Generation (텍스트 생성)
 - **입력 예시**: The future of artificial intelligence
-- **출력 예시**: A new book by David Rizzo, published this week at MIT Press on behalf and a member-only publisher called "The Future of Artificial Intelligence."
-- 실행 화면 예시: ![alt text](image.png)
+- **출력 예시**: The future is already here.
+The future of artificial neural networks (ANNs) is a very important topic in artificial intelligence.
+In this chapter, we will discuss the potential of ANNs to solve many of the problems of artificial intelligence, such as how to use them to solve problems
+- 실행 화면 예시: ![alt text](image-1.png)
 
 
 ---
