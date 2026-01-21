@@ -9,27 +9,27 @@
 </head>
 <body>
     <!-- 탭 UI -->
-    <div class="tabs">
-        <a href="/summarize/" class="{% if tab == 'summarize' %}active{% endif %}">
-            Summarize
-        </a>
+    <div class="tabs"> 
         {% if user.is_authenticated %}
+            <a href="/summarize/" class="{% if tab == 'summarize' %}active{% endif %}">
+                Summarize
+            </a>
             <a href="/sentiment/" class="{% if tab == 'sentiment' %}active{% endif %}">
                 Sentiment
             </a>
-            <a href="/generate/" class="{% if tab == 'generate' %}active{% endif %}">
-                Generate
-            </a>
         {% else %}
+            <a href="/accounts/login/?next=/summarize/"
+                onclick="alert('Please log in to access this feature.')">
+                Summarize
+            </a>
             <a href="/accounts/login/?next=/sentiment/"
                 onclick="alert('Please log in to access this feature.')">
-            Sentiment
-            </a>
-            <a href="/accounts/login/?next=/generate/"
-                onclick="alert('Please log in to access this feature.')">
-            Generate
+                Sentiment
             </a>
         {% endif %}
+        <a href="/generate/" class="{% if tab == 'generate' %}active{% endif %}">
+            Generate
+        </a>
     </div>
 
     <!-- 페이지별 내용 -->
