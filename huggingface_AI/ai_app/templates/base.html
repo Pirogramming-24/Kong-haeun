@@ -1,7 +1,7 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -9,17 +9,17 @@
 </head>
 <body>
     <!-- 탭 UI -->
-    <nav class="tab-var">
+    <div class="tabs">
         <a href="/summarize/" class="{% if tab == 'summarize' %}active{% endif %}">
-            요약
+            Summarize
         </a>
         <a href="/sentiment/" class="{% if tab == 'sentiment' %}active{% endif %}">
-            감정 분석
+            Sentiment
         </a>
         <a href="/generate/" class="{% if tab == 'generate' %}active{% endif %}">
-            텍스트 생성
+            Generate
         </a>
-    </nav>
+    </div>
 
     <!-- 페이지별 내용 -->
     <div class="container">

@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>요약</h2>
+<h2>Text Summarization</h2>
 
 <form method="post">
     {% csrf_token %}
     <textarea name="text" rows="8" cols="70"
-        placeholder="요약할 텍스트를 입력하세요"></textarea>
+        placeholder="Enter text to summarize."></textarea>
         <br>
-    <button type="submit">요약 실행</button>
+    <button type="submit">Run Summarization</button>
 </form>
 
 {% if result %}
-<hr>
-<h3>요약 결과</h3>
 <div class="result-box">
     {{ result }}
 </div>
