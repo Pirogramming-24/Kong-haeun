@@ -13,6 +13,7 @@ def home(request):
 @require_http_methods(["GET","POST"])
 def summarize(request):
     result = None
+    user_input=""
 
     if request.method == "POST":
         user_input = request.POST.get("text","")
@@ -33,6 +34,7 @@ def summarize(request):
         "tab":"summarize",
         "result":result,
         "histories": histories,
+        "user_input": user_input,
     }
 
     return render(request, "summarize.html", context)
@@ -41,7 +43,8 @@ def summarize(request):
 @require_http_methods(["GET","POST"])
 def sentiment(request):
     result = None
-
+    user_input=""
+    
     if request.method == "POST":
         user_input = request.POST.get("text","")
         result = analyze_sentiment(user_input)
@@ -61,6 +64,7 @@ def sentiment(request):
         "tab":"sentiment",
         "result":result,
         "histories": histories,
+        "user_input": user_input,
     }
     
     return render(request, "sentiment.html", context)
@@ -68,7 +72,8 @@ def sentiment(request):
 @require_http_methods(["GET","POST"])
 def generate(request):
     result = None
-
+    user_input=""
+    
     if request.method == "POST":
         user_input = request.POST.get("text","")
         result = generate_text(user_input)
@@ -76,6 +81,7 @@ def generate(request):
     context = {
         "tab":"generate",
         "result":result,
+        "user_input": user_input,
     }
     
     return render(request, "generate.html", context)
