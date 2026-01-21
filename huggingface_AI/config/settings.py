@@ -103,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -121,3 +121,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"

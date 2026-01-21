@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from ai_app.services.huggingface import (summarize_text, analyze_sentiment, generate_text)
 
@@ -22,6 +23,7 @@ def summarize(request):
 
     return render(request, "summarize.html", context)
 
+@login_required
 @require_http_methods(["GET","POST"])
 def sentiment(request):
     result = None
@@ -37,6 +39,7 @@ def sentiment(request):
     
     return render(request, "sentiment.html", context)
 
+@login_required
 @require_http_methods(["GET","POST"])
 def generate(request):
     result = None
