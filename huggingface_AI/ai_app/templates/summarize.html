@@ -16,4 +16,19 @@
 </div>
 {% endif %}
 
+{% if histories %}
+<hr>
+<h3>Recent History</h3>
+
+<ul class="history-list">
+    {% for h in histories %}
+        <li>
+            <strong>Input:</strong> {{ h.input_text|truncatechars:80 }}<br>
+            <strong>Result:</strong> {{ h.result_text|truncatechars:80 }}<br>
+            <small>{{ h.created_at }}</small>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% endblock %}

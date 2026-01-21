@@ -23,10 +23,16 @@ def summarize(request):
                 input_text=user_input,
                 result_text=result,
             )     
-        
+    
+    histories = ChatHistory.objects.filter(
+        user=request.user,
+        task="summarize"
+    ).order_by("-created_at")[:5]
+
     context = {
         "tab":"summarize",
         "result":result,
+        "histories": histories,
     }
 
     return render(request, "summarize.html", context)
@@ -46,9 +52,15 @@ def sentiment(request):
             result_text=result,
         )
 
+    histories = ChatHistory.objects.filter(
+        user=request.user,
+        task="sentiment"
+    ).order_by("-created_at")[:5]
+
     context = {
         "tab":"sentiment",
         "result":result,
+        "histories": histories,
     }
     
     return render(request, "sentiment.html", context)
