@@ -1,0 +1,11 @@
+# Django core
+Django>=5.0
+
+# Image upload (Post, Story)
+Pillow>=10.0
+
+# Production / Docker run
+gunicorn>=21.2.0
+
+# Environment variable
+python-dotenv>=1.0.1
