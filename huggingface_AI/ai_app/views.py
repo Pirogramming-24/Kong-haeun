@@ -1,16 +1,19 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
+from ai_app.services.huggingface import (summarize_text, analyze_sentiment, generate_text)
 
 # Create your views here.
 def home(request):
     return HttpResponse("AI Home")
 
+@require_http_methods(["GET","POST"])
 def summarize(request):
     result = None
 
     if request.method == "POST":
-        text = request.POST.get("text","").strip()
-        if text:
-            result = f"{text[:100]}..."
+        user_input = request.POST.get("text","")
+        result = summarize_text(user_input)
 
     context = {
         "tab":"summarize",
@@ -19,13 +22,13 @@ def summarize(request):
 
     return render(request, "summarize.html", context)
 
+@require_http_methods(["GET","POST"])
 def sentiment(request):
     result = None
 
     if request.method == "POST":
-        text = request.POST.get("text","").strip()
-        if text:
-            result = "긍정" if "good" in text.lower() else "중립"
+        user_input = request.POST.get("text","")
+        result = analyze_sentiment(user_input)
 
     context = {
         "tab":"sentiment",
@@ -34,13 +37,13 @@ def sentiment(request):
     
     return render(request, "sentiment.html", context)
 
+@require_http_methods(["GET","POST"])
 def generate(request):
     result = None
 
     if request.method == "POST":
-        text = request.POST.get("text","").strip()
-        if text:
-            result = text + "... and this is a generated continuation."
+        user_input = request.POST.get("text","")
+        result = generate_text(user_input)
 
     context = {
         "tab":"generate",
