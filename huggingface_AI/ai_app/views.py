@@ -7,7 +7,7 @@ from ai_app.models import ChatHistory
 
 # Create your views here.
 def home(request):
-    return HttpResponse("AI Home")
+    return render(request, "home.html", {"tab": None})
 
 @login_required
 @require_http_methods(["GET","POST"])
