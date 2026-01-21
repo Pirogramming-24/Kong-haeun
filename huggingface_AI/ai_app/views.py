@@ -78,10 +78,26 @@ def generate(request):
         user_input = request.POST.get("text","")
         result = generate_text(user_input)
 
+        if request.user.is_authenticated:
+                    ChatHistory.objects.create(
+                        user=request.user,
+                        task="generate",
+                        input_text=user_input,
+                        result_text=result,
+                    )
+
+    histories = None
+    if request.user.is_authenticated:
+        histories = ChatHistory.objects.filter(
+            user=request.user,
+            task="generate"
+        ).order_by("-created_at")[:5]
+
     context = {
         "tab":"generate",
         "result":result,
         "user_input": user_input,
+        "histories": histories,
     }
     
     return render(request, "generate.html", context)
