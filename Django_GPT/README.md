@@ -87,16 +87,6 @@ python manage.py runserver
 http://127.0.0.1:8000/
 ```
 
----
-## 로그인 안내
-- 본 프로젝트는 Django 기본 인증 시스템을 사용합니다.
-- 테스트용 계정은 Django 관리자(admin) 페이지에서 생성할 수 있습니다.
-
-```bash
-python manage.py createsuperuser
-```
-
----
 ### 🔎 참고
 - 비로그인 사용자는 **Text Generation 탭만 사용 가능**
 - 로그인 시 **요약 / 감정 분석 / 텍스트 생성** 기능 모두 이용 가능하며,

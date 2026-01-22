@@ -2,7 +2,10 @@
 
 {% block content %}
 <h2>Login</h2>
-
+<p>
+    Don’t have an account?
+    <a href="/accounts/signup/?next={{ request.GET.next }}">Sign up</a>
+</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

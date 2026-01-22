@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from ai_app.services.huggingface import (summarize_text, analyze_sentiment, generate_text)
 from ai_app.models import ChatHistory
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 def home(request):
@@ -101,3 +103,16 @@ def generate(request):
     }
     
     return render(request, "generate.html", context)
+
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            next_url = request.GET.get("next")
+            return redirect(next_url or "/")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "registration/signup.html", {"form": form})

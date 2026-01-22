@@ -31,6 +31,22 @@
         <a href="/generate/" class="{% if tab == 'generate' %}active{% endif %}">
             Generate
         </a>
+        <div class="auth-bar">
+            {% if user.is_authenticated %}
+                <span>Welcome, {{ user.username }}</span>
+                |
+                <form method="post" action="/accounts/logout/" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none;border:none;color:#ddd;cursor:pointer;">
+                        Logout
+                    </button>
+                </form>
+            {% else %}
+                <a href="/accounts/login/">Login</a>
+                |
+                <a href="/accounts/signup/">Sign up</a>
+            {% endif %}
+        </div>
     </div>
 
     <!-- 페이지별 내용 -->
