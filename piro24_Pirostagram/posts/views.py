@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .models import Post, Comment
+from .models import Post, Comment, Like
 from .forms import PostForm, CommentForm
 
 
@@ -9,8 +9,15 @@ from .forms import PostForm, CommentForm
 @login_required
 def feed(request):
     posts = Post.objects.all()
+    
+    liked_post_ids = Like.objects.filter(
+        user=request.user,
+        post__in=posts
+    ).values_list('post_id', flat=True)
+
     context = {
         "posts":posts,
+        'liked_post_ids': liked_post_ids,
     }
     return render(request,"posts/feed.html",context)
 
@@ -36,11 +43,13 @@ def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments.all()
     comment_form = CommentForm()
+    is_liked= post.likes.filter(user=request.user).exists()
 
     context = {
         'post':post,
         'comments':comments,
         'comment_form': comment_form,
+        'is_liked':is_liked,
     }
     return render(request, 'posts/detail.html', context)
 
@@ -122,7 +131,7 @@ def comment_update(request, pk, comment_pk):
         'comments': comment.post.comments.all(),
     }
     return render(request, 'posts/detail.html', context)
-    
+
 @login_required
 def comment_delete(request, pk, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
@@ -132,3 +141,22 @@ def comment_delete(request, pk, comment_pk):
 
     comment.delete()
     return redirect('posts:detail', pk=pk)
+
+@login_required
+def like_toggle(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    like = Like.objects.filter(
+        user=request.user,
+        post=post
+    )
+
+    if like.exists():
+        like.delete()
+    else:
+        Like.objects.create(
+            user=request.user,
+            post=post
+        )
+    
+    return redirect(request.META.get('HTTP_REFERER', 'posts:feed'))

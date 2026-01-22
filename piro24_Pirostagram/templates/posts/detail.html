@@ -29,7 +29,20 @@
                 {{ post.content }}
             </div>
         {% endif %}
-    
+        
+        <!-- 좋아요 버튼 -->
+        <form action="{% url 'posts:like' post.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="like-btn">
+                {% if is_liked %}
+                    ❤️
+                {% else %}
+                    🤍
+                {% endif %}
+                {{ post.likes.count }}
+            </button>
+        </form>
+        
         <!-- 날짜 -->
         <div class="post-date">
             {{ post.created_at|date:"Y.m.d H:i" }}
