@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% for user in users %}
+<div class="user-card">
+    <a href="{% url 'users:profile' user.username %}">
+        {% if user.profile.image %}
+            <img src="{{ user.profile.image.url }}">
+        {% else %}
+            <img src="{% static 'images/default_profile.png' %}">
+        {% endif %}
+
+        <div>
+            <strong>{{ user.username }}</strong>
+        </div>
+    </a>
+
+    <form action="{% url 'users:follow_toggle' user.id %}" method="POST">
+        {% csrf_token %}
+        {% if user.id in following_ids %}
+            <button class="following-btn">팔로잉</button>
+        {% else %}
+            <button class="follow-btn">팔로우</button>
+        {% endif %}
+    </form>
+</div>
+{% empty %}
+<p>검색 결과가 없습니다.</p>
+{% endfor %}
+
+<form action="{% url 'posts:feed' %}" method="get" class="back-to-feed">
+    <button type="submit" class="back-btn">← 피드로 돌아가기</button>
+</form>
+
+{% endblock %}

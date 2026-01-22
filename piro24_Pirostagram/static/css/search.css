@@ -1,0 +1,34 @@
+.user-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #7ed957;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.user-card img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+}
+
+.back-to-feed {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #dbdbdb;
+    font-size: 14px;
+    color: #262626;
+    background-color: #fff;
+}
+
+.back-btn:hover {
+    background-color: #fafafa;
+}

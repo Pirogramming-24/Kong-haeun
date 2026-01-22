@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{% static 'css/comment.css' %}">
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user.css' %}">
 </head>
 <body>
 
@@ -20,6 +22,10 @@
             {{ user.username }} 님 |
             <a href="{% url 'users:logout' %}">로그아웃</a>
             <a href="{% url 'posts:create' %}">+ 게시글 작성</a>
+            <form action="{% url 'users:search' %}" method="GET">
+                <input type="text" name="q" placeholder="유저 검색">
+                <button type="submit">검색</button>
+            </form>
         {% endif %}
 
     <div class="container">

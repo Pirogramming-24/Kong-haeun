@@ -101,3 +101,22 @@ def profile_edit(request):
         'form': form
     }
     return render(request, 'users/profile_edit.html', context)
+
+@login_required
+def user_search(request):
+    query = request.GET.get('q', '')
+
+    users = User.objects.filter(
+        username__icontains=query
+    ).exclude(id=request.user.id)
+
+    following_ids = Follow.objects.filter(
+        from_user=request.user
+    ).values_list('to_user_id', flat=True)
+
+    context = {
+        'query': query,
+        'users': users,
+        'following_ids': following_ids,
+    }
+    return render(request, 'users/search.html', context)
