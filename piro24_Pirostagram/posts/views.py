@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .models import Post, Comment, Like
+from .models import Post, Comment, Like, Story
 from .forms import PostForm, CommentForm
 from users.models import Follow
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your views here.
 @login_required
@@ -12,6 +14,19 @@ def feed(request):
     following_users = Follow.objects.filter(
         from_user=request.user
     ).values_list('to_user', flat=True)
+
+    # 스토리
+    all_stories = Story.objects.filter(
+        author__in=list(following_users) + [request.user],
+        created_at__gte=timezone.now() - timedelta(hours=24)
+    ).order_by('created_at')
+
+    story_map = {}
+    for story in all_stories:
+        if story.author_id not in story_map:
+            story_map[story.author_id] = story
+
+    stories = story_map.values()
 
     # 나 + 팔로우한 사람들의 게시글
     posts = Post.objects.filter(
@@ -25,6 +40,7 @@ def feed(request):
     ).values_list('post_id', flat=True)
 
     context = {
+        "stories": stories,
         "posts":posts,
         'liked_post_ids': liked_post_ids,
     }
@@ -169,3 +185,32 @@ def like_toggle(request, pk):
         )
     
     return redirect(request.META.get('HTTP_REFERER', 'posts:feed'))
+
+@login_required
+def story_create(request):
+    if request.method == 'POST':
+        images = request.FILES.getlist('images')
+
+        for image in images:
+            Story.objects.create(
+                author=request.user,
+                image=image
+            )
+
+        return redirect('posts:feed')
+
+    return render(request, 'posts/story_create.html')
+
+@login_required
+def story_detail(request, pk):
+    story = get_object_or_404(Story, pk=pk)
+
+    stories = Story.objects.filter(
+        author=story.author,
+        created_at__gte=timezone.now() - timedelta(hours=24)
+    ).order_by('created_at')
+
+    return render(request, 'posts/story_detail.html', {
+        'stories': stories,
+        'start_story': story,
+    })

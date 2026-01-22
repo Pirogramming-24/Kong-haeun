@@ -20,3 +20,30 @@
     height: 100%;
     object-fit: cover;
 }
+
+.story-bar {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    overflow-x: auto;
+}
+
+.story-item {
+    text-align: center;
+    width: 70px;
+    flex-shrink: 0;
+}
+
+.story-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff5a5f;
+}
+
+.story-item span {
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+}

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your models here.
 class Post(models.Model): # 작성자, 이미지, 내용, 작성 시간
@@ -55,3 +57,18 @@ class Like(models.Model):
 
     def __str__(self):
         return f'{self.user.username} likes Post {self.post.pk}'
+
+class Story(models.Model):
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='stories'
+    )
+    image = models.ImageField(upload_to='stories/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_active(self):
+        return self.created_at >= timezone.now() - timedelta(hours=24)
+
+    def __str__(self):
+        return f"{self.author.username} story"

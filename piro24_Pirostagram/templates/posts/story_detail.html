@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="story-viewer">
+    <a href="{% url 'posts:feed' %}" class="story-close">✕</a>
+    {% for s in stories %}
+        <img
+            class="story-image"
+            src="{{ s.image.url }}"
+            {% if s.id != start_story.id %}
+                style="display:none;"
+            {% endif %}
+        >
+    {% endfor %}
+
+    <div class="story-controls">
+        <button type="button" onclick="prevStory()">⬅</button>
+        <button type="button" onclick="nextStory()">➡</button>
+    </div>
+
+</div>
+
+<script>
+let currentIndex = 0;
+const images = document.querySelectorAll('.story-image');
+
+// 시작 스토리 index 맞추기
+images.forEach((img, idx) => {
+    if (img.style.display === 'block') {
+        currentIndex = idx;
+    }
+});
+
+function showStory(index) {
+    images.forEach(img => img.style.display = 'none');
+    images[index].style.display = 'block';
+}
+
+function nextStory() {
+    if (currentIndex < images.length - 1) {
+        currentIndex++;
+        showStory(currentIndex);
+    }
+}
+
+function prevStory() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showStory(currentIndex);
+    }
+}
+</script>
+
+{% endblock %}

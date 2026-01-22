@@ -15,4 +15,7 @@ urlpatterns = [
     path('<int:pk>/comments/<int:comment_pk>/delete/', views.comment_delete, name='comment_delete'),
 
     path('<int:pk>/like/', views.like_toggle, name='like'),
+
+    path('stories/create/', views.story_create, name='story_create'),
+    path('stories/<int:pk>/', views.story_detail, name='story_detail'),
 ]

@@ -2,6 +2,26 @@
 {% load static %}
 {% block content %}
 <div class="feed">
+    <!-- 스토리 바 -->
+    <div class="story-bar">
+        <a href="{% url 'posts:story_create' %}" class="story-add">+ 스토리</a>
+
+        {% for story in stories %}
+            <a href="{% url 'posts:story_detail' story.pk %}" class="story-item">
+                <img
+                    src="{% if story.author.profile.image %}
+                            {{ story.author.profile.image.url }}
+                        {% else %}
+                            {% static 'images/default_profile.png' %}
+                        {% endif %}"
+                >
+                <span>{{ story.author.username }}</span>
+            </a>
+        {% empty %}
+            <p class="no-story">스토리가 없습니다.</p>
+        {% endfor %}
+    </div>
+
     {% for post in posts %}
     <div class="post-card">
         <!-- 작성자 이미지, 이름 -->
