@@ -1,8 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
     <title>Pirostagram</title>
 </head>
 <body>
@@ -14,12 +19,12 @@
         {% if user.is_authenticated %}
             {{ user.username }} 님 |
             <a href="{% url 'logout' %}">로그아웃</a>
-        {% else %}
-            <a href="{% url 'login' %}">로그인</a> |
-            <a href="{% url 'signup' %}">회원가입</a>
+            <a href="{% url 'posts:create' %}">+ 게시글 작성</a>
         {% endif %}
 
     </header>
+
+    
 
     {% block content %}
     {% endblock %}

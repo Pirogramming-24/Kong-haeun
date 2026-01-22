@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>Pirostagram</title>
+</head>
+<body>
+    <div class="home-container">
+        <h1 class="home-title">Pirostagram</h1>
+        <p class="home-subtitle">
+            사진과 이야기를 공유하세요
+        </p>
+    
+        <div class="home-actions">
+            <a href="{% url 'login' %}" class="btn primary">로그인</a>
+            <a href="{% url 'signup' %}" class="btn">회원가입</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="post-card">
+
+    <!-- 작성자 이미지, 이름 -->
+    <div class="post-header">
+        <img class="post-profile-image"
+            src="{% if post.author.profile.image %}{{ post.author.profile.image.url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}"
+            alt="profile"
+        >
+        <span class="post-author">
+            {{ post.author.username }}
+        </span>
+    </div>
+
+    <!-- 이미지 -->
+    {% if post.image %}
+        <div class="post-image">
+            <img src="{{ post.image.url }}" alt="post image">
+        </div>
+    {% endif %}
+
+    <!-- 내용 -->
+    {% if post.content %}
+        <div class="post-content">
+            {{ post.content }}
+        </div>
+    {% endif %}
+
+    <!-- 날짜 -->
+    <div class="post-date">
+        {{ post.created_at|date:"Y.m.d H:i" }}
+    </div>
+
+    <!-- 작성자만 수정/삭제 -->
+    {% if post.author == request.user %}
+    <div class="post-actions">
+        <a href="{% url 'posts:update' post.pk %}">수정</a>
+
+        <form action="{% url 'posts:delete' post.pk %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">삭제</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <hr>
+
+
+</div>
+
+{% endblock %}

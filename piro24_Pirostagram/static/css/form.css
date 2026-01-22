@@ -1,0 +1,29 @@
+.create-container,
+.update-container,
+.auth-container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+    width: 100%;
+    background: #3897f0;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 4px;
+}

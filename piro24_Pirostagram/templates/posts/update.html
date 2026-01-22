@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="update-container">
+    <h2>게시글 수정</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">수정</button>
+    </form>
+</div>
+{% endblock %}

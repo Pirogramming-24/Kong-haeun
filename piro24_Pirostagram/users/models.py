@@ -11,7 +11,8 @@ class Profile(models.Model):
     image = models.ImageField(
         upload_to='profils/',
         default='profiles/default.png',
-        blank=True
+        blank=True,
+        null=True
     )
     
     def __str__(self):
