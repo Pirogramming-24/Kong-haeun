@@ -1,15 +1,67 @@
-.post-actions {
-    padding: 10px;
+.post-card {
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+/* header */
+.post-header {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    padding: 12px;
 }
 
-.post-actions a,
-.post-actions button {
+.post-profile-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.post-author {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* image */
+.post-image img {
+    width: 100%;
+    display: block;
+}
+
+/* content */
+.post-content {
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* date */
+.post-date {
+    padding: 0 12px 12px;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+/* actions */
+.post-actions {
+    display: flex;
+    gap: 12px;
+    padding: 8px 12px;
+}
+
+.post-update {
     font-size: 13px;
-    color: #3897f0;
+    font-weight: 600;
+    color: #0095f6;
 }
 
-.post-actions button {
+.post-delete {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ed4956;
     background: none;
+    border: none;
+    padding: 0;
 }

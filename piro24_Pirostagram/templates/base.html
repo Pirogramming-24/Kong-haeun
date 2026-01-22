@@ -2,19 +2,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/feed.css' %}">
     <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comment.css' %}">
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
-    <title>Pirostagram</title>
 </head>
 <body>
+
     <header>
-        <h1>
-            <a href="/">Pirostagram</a>
-        </h1>
+        <h1><a href="/">Pirostagram</a></h1>
+    </header>
 
         {% if user.is_authenticated %}
             {{ user.username }} 님 |
@@ -22,11 +21,9 @@
             <a href="{% url 'posts:create' %}">+ 게시글 작성</a>
         {% endif %}
 
-    </header>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
 
-    
-
-    {% block content %}
-    {% endblock %}
 </body>
 </html>
