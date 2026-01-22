@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="profile-header">
+    <div class="profile-image-wrapper">
+        {% if profile_user.profile.image %}
+            <img src="{{ profile_user.profile.image.url }}" class="profile-image">
+        {% else %}
+            <img src="{% static 'images/default_profile.png' %}" class="profile-image">
+        {% endif %}
+    </div>
+
+    <div class="profile-info">
+        <h2>{{ profile_user.username }}</h2>
+
+        <p class="profile-counts">
+            게시글 {{ profile_user.posts.count }} ·
+            팔로워 {{ profile_user.followers.count }} ·
+            팔로잉 {{ profile_user.following.count }}
+        </p>
+
+        <p class="profile-bio">
+            {{ profile_user.profile.bio|default:"소개글이 없습니다." }}
+        </p>
+
+        {% if request.user == profile_user %}
+            <a href="{% url 'users:profile_edit' %}" class="edit-btn">
+                프로필 수정
+            </a>
+        {% else %}
+            <form action="{% url 'users:follow_toggle' profile_user.id %}" method="POST">
+                {% csrf_token %}
+                {% if is_following %}
+                    <button class="unfollow-btn">팔로잉</button>
+                {% else %}
+                    <button class="follow-btn">팔로우</button>
+                {% endif %}
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -57,3 +57,14 @@ class LoginForm(AuthenticationForm):
         label="비밀번호",
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image', 'bio']
+        widgets = {
+            'bio': forms.Textarea(attrs={
+                'rows': 3,
+                'placeholder': '소개글을 입력하세요...',
+            })
+        }

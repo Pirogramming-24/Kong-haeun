@@ -3,13 +3,22 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .models import Post, Comment, Like
 from .forms import PostForm, CommentForm
-
+from users.models import Follow
 
 # Create your views here.
 @login_required
 def feed(request):
-    posts = Post.objects.all()
+    # 내가 팔로우한 사람들 id 목록
+    following_users = Follow.objects.filter(
+        from_user=request.user
+    ).values_list('to_user', flat=True)
+
+    # 나 + 팔로우한 사람들의 게시글
+    posts = Post.objects.filter(
+        author__in=list(following_users) + [request.user]
+    ).distinct()
     
+    # 좋아요
     liked_post_ids = Like.objects.filter(
         user=request.user,
         post__in=posts

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/post.css' %}">
     <link rel="stylesheet" href="{% static 'css/comment.css' %}">
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 <body>
 
@@ -17,7 +18,7 @@
 
         {% if user.is_authenticated %}
             {{ user.username }} 님 |
-            <a href="{% url 'logout' %}">로그아웃</a>
+            <a href="{% url 'users:logout' %}">로그아웃</a>
             <a href="{% url 'posts:create' %}">+ 게시글 작성</a>
         {% endif %}
 
