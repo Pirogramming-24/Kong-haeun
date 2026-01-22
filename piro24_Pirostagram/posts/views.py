@@ -1,6 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from .models import Post
 
 # Create your views here.
 def feed(request):
-    return HttpResponse("Pirostagram Feed")
+    posts = Post.objects.all().order_by('-created_at')
+    context = {
+        "posts":posts,
+    }
+    return render(request,"posts/feed.html",context)
