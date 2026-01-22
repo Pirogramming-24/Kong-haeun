@@ -2,6 +2,16 @@
 {% load static %}
 {% block content %}
 
+<form action="{% url 'users:search' %}" method="GET" class="search-form">
+    <input
+        type="text"
+        name="q"
+        placeholder="유저 검색"
+        value="{{ query }}"
+    >
+    <button type="submit">검색</button>
+</form>
+
 {% for user in users %}
 <div class="user-card">
     <a href="{% url 'users:profile' user.username %}">

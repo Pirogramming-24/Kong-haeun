@@ -41,4 +41,22 @@
     </div>
 </div>
 
+<div class="profile-posts">
+    {% if posts %}
+        <div class="post-grid">
+            {% for post in posts %}
+                <a href="{% url 'posts:detail' post.pk %}" class="post-grid-item">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="post">
+                    {% else %}
+                        <div class="no-image">이미지 없음</div>
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>아직 게시글이 없습니다.</p>
+    {% endif %}
+</div>
+
 {% endblock %}
