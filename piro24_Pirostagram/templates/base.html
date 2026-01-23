@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Pirostagram</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user.css' %}">
+    <link rel="stylesheet" href="{% static 'css/story.css' %}">
+</head>
+<body>
+
+<header class="top-nav">
+    {% if user.is_authenticated %}
+    <div class="nav-left">
+        <a href="{% url 'posts:feed' %}" class="logo">Pirostagram</a>
+    </div>
+    <nav class="nav-menu">
+        <a href="{% url 'posts:feed' %}">홈</a>
+        <a href="{% url 'users:search' %}">유저검색</a>
+        <a href="{% url 'posts:create' %}">게시글 만들기</a>
+        <a href="{% url 'users:profile' request.user.username %}">프로필</a>
+        <span>{{ user.username }} 님</span>
+        <a href="{% url 'users:logout' %}">로그아웃</a>
+    </nav>
+    {% else %}
+    <div class="nav-left">
+        <a href="{% url 'home' %}" class="logo">Pirostagram</a>
+    </div>
+        <nav class="nav-menu">
+            <a href="{% url 'users:login' %}">로그인</a>
+            <a href="{% url 'users:signup' %}">회원가입</a>
+        </nav>
+    {% endif %}
+</header>
+
+<main class="main-content">
+    {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>
+
+

@@ -1,0 +1,49 @@
+/* 피드 카드 */
+.post-card {
+    max-width: 500px;
+    margin: 0 auto 24px;
+    border: 1px solid #dbdbdb;
+    background: #fff;
+}
+
+/* 이미지 영역 */
+.post-image {
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    background-color: #000;
+}
+
+/* 이미지 자체 */
+.post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story-bar {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    overflow-x: auto;
+}
+
+.story-item {
+    text-align: center;
+    width: 70px;
+    flex-shrink: 0;
+}
+
+.story-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff5a5f;
+}
+
+.story-item span {
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+}

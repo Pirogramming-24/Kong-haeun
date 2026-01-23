@@ -1,0 +1,12 @@
+# Docker 빌드가 무시할 파일 목록
+
+venv/
+.env
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+media/
+.git
+.gitignore

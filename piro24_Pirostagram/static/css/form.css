@@ -1,0 +1,63 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input,
+textarea {
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+}
+
+textarea {
+    resize: none;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #0095f6;
+    color: white;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.form-error {
+    color: #ed4956;
+    font-size: 13px;
+}
+
+.story-create-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.story-image-field input[type="file"] {
+    width: 100%;
+    margin: 20px 0;
+}
+
+.story-submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #0095f6;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.story-submit-btn:hover {
+    opacity: 0.9;
+}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="feed">
+    <!-- 스토리 바 -->
+    <div class="story-bar">
+        <a href="{% url 'posts:story_create' %}" class="story-add">+ 스토리</a>
+
+        {% for story in stories %}
+            <a href="{% url 'posts:story_detail' story.pk %}" class="story-item">
+                <img
+                    src="{% if story.author.profile.image %}
+                            {{ story.author.profile.image.url }}
+                        {% else %}
+                            {% static 'images/default_profile.png' %}
+                        {% endif %}"
+                >
+                <span>{{ story.author.username }}</span>
+            </a>
+        {% empty %}
+            <p class="no-story">스토리가 없습니다.</p>
+        {% endfor %}
+    </div>
+
+    {% for post in posts %}
+    <div class="post-card">
+        <!-- 작성자 이미지, 이름 -->
+        <div class="post-header">
+            <img class="post-profile-image"
+                src="{% if post.author.profile.image %}{{ post.author.profile.image.url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}"
+                alt="profile"
+            >
+            <a href="{% url 'users:profile' post.author.username %}">
+                {{ post.author.username }}
+            </a>
+        </div>
+
+        <!-- 클릭 시 detail 페이지 이동 -->
+        <a href="{% url 'posts:detail' post.pk %}">    
+            <!-- 이미지 -->
+            {% if post.image %}
+            <div class="post-image">
+                <img src="{{ post.image.url }}" alt="post image">
+            </div>
+            {% endif %}
+            
+            <!-- 내용 -->
+            {% if post.content %}
+            <div class="post-content">
+                {{ post.content }}
+            </div>
+            {% endif %}
+        </a>
+
+        <!-- 좋아요 -->
+        <div class="post-actions">
+            <form action="{% url 'posts:like' post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="like-btn">
+                    {% if post.pk in liked_post_ids %}
+                        ❤️
+                    {% else %}
+                        🤍
+                    {% endif %}
+                    {{ post.likes.count }}
+                </button>
+            </form>
+
+        </div>
+        <!-- 날짜 -->
+        <div class="post-date">
+            {{ post.created_at|date:"Y.m.d H:i" }}
+        </div>
+    </div>
+
+    {% empty %}
+        <p>게시글이 없습니다.</p>
+    {% endfor %}
+
+</div>
+{% endblock %}

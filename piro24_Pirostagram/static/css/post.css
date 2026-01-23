@@ -1,0 +1,107 @@
+.post-card {
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    margin-bottom: 24px;
+}
+
+/* header */
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+}
+
+.post-profile-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.post-author {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* image */
+.post-image img {
+    width: 100%;
+    display: block;
+}
+
+/* content */
+.post-content {
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* date */
+.post-date {
+    padding: 0 12px 12px;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+/* actions */
+.post-actions {
+    display: flex;
+    gap: 12px;
+    padding: 8px 12px;
+}
+
+.post-update {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0095f6;
+}
+
+.post-delete {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ed4956;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+/* 게시글 하단 액션 영역 */
+.post-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    align-items: center;
+}
+
+/* 좋아요 버튼 */
+.like-btn {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+    color: #262626;
+}
+
+.like-btn:hover {
+    opacity: 0.7;
+}
+
+/* 좋아요 활성 상태 (❤️) */
+.like-btn.active {
+    color: #ed4956;
+}
+
+.post-detail-image {
+    width: 100%;
+    max-height: 700px;
+    overflow: hidden;
+}
+
+.post-detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 디테일은 잘리지 않게 */
+    background-color: #000;
+}

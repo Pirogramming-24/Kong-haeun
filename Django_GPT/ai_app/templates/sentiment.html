@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Sentiment Analysis</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <textarea name="text" rows="8" cols="70"
+        placeholder="Enter text for sentiment analysis.">{{ user_input }}</textarea>
+        <br>
+    <button type="submit">Analyze Sentiment</button>
+</form>
+
+{% if result %}
+<div class="result-box">
+    {{ result }}
+</div>
+{% endif %}
+
+{% if histories %}
+<hr>
+<h3>Recent History</h3>
+
+<ul class="history-list">
+    {% for h in histories %}
+        <li>
+            <strong>Input:</strong> {{ h.input_text|truncatechars:80 }}<br>
+            <strong>Result:</strong> {{ h.result_text|truncatechars:80 }}<br>
+            <small>{{ h.created_at }}</small>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+{% endblock %}

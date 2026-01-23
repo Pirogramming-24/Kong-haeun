@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="post-card">
+    
+        <!-- 작성자 이미지, 이름 -->
+        <div class="post-header">
+            <img class="post-profile-image"
+                src="{% if post.author.profile.image %}{{ post.author.profile.image.url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}"
+                alt="profile"
+            >
+            <a href="{% url 'users:profile' post.author.username %}">
+                {{ post.author.username }}
+            </a>
+        </div>
+    
+        <!-- 이미지 -->
+        {% if post.image %}
+            <div class="post-detail-image">
+                <img src="{{ post.image.url }}" alt="post image">
+            </div>
+        {% endif %}
+    
+        <!-- 내용 -->
+        {% if post.content %}
+            <div class="post-content">
+                {{ post.content }}
+            </div>
+        {% endif %}
+        
+        <!-- 좋아요 버튼 -->
+        <form action="{% url 'posts:like' post.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="like-btn">
+                {% if is_liked %}
+                    ❤️
+                {% else %}
+                    🤍
+                {% endif %}
+                {{ post.likes.count }}
+            </button>
+        </form>
+
+        <!-- 날짜 -->
+        <div class="post-date">
+            {{ post.created_at|date:"Y.m.d H:i" }}
+        </div>
+    
+        <!-- 작성자만 수정/삭제 -->
+        {% if post.author == request.user %}
+        <div class="post-actions">
+            <a href="{% url 'posts:update' post.pk %}" class="post-update">수정</a>
+    
+            <form action="{% url 'posts:delete' post.pk %}" method="POST" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="post-delete">삭제</button>
+            </form>
+        </div>
+        {% endif %}
+    
+        <hr>
+    
+        <!-- 댓글 작성 -->
+        <form class="comment-form"
+          action="{% url 'posts:comment_create' post.pk %}" method="POST">
+            {% csrf_token %}
+            {{ comment_form.content }}
+            <button type="submit">게시</button>
+        </form>
+    
+        <!-- 댓글 목록 -->
+        <div class="comment-count">
+            댓글 {{ post.comments.count }}개
+        </div>
+        <div class="comment-list">
+            {% for comment in comments %}
+                <div class="comment">
+                    <strong>{{ comment.author.username }}</strong>
+                    {% if editing_comment and editing_comment.pk == comment.pk %}
+                        <!-- 수정 중 -->
+                        <form action="{% url 'posts:comment_update' post.pk comment.pk %}" method="POST">
+                            {% csrf_token %}
+                            {{ comment_form.content }}
+                            <button type="submit">수정</button>
+                            <a href="{% url 'posts:detail' post.pk %}">취소</a>
+                        </form>
+                    {% else %}
+                        {{ comment.content }}
+    
+                        {% if comment.author == request.user %}
+                            <a href="{% url 'posts:comment_update' post.pk comment.pk %}" class="comment-update">수정</a>
+                            <form action="{% url 'posts:comment_delete' post.pk comment.pk %}"
+                                method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="comment-delete">삭제</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p>댓글이 없습니다.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

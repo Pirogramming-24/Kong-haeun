@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>로그아웃</h2>
+
+<p>정말 로그아웃 하시겠습니까?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">로그아웃</button>
+    <a href="/">취소</a>
+</form>
+{% endblock %}
